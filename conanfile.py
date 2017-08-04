@@ -4,6 +4,7 @@ class BoostSystemConan(ConanFile):
     name = "Boost.System"
     version = "1.64.0"
     generators = "txt"
+    settings = "os", "arch", "compiler", "build_type"
     url = "https://github.com/boostorg/system"
     description = "Please visit http://www.boost.org/doc/libs/1_64_0/libs/libraries.htm"
     license = "www.boost.org/users/license.html"
