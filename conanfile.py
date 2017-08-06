@@ -28,10 +28,10 @@ class BoostSystemConan(ConanFile):
         b2_full_path = os.path.join(boost_build.rootpath, b2_bin_dir_name, b2_bin_name)
 
         toolsets = {
-          'gcc': 'toolset=gcc',
-          'Visual Studio': 'toolset=msvc',
-          'clang': 'toolset=clang',
-          'apple-clang': 'toolset=darwin'}
+          'gcc': 'gcc',
+          'Visual Studio': 'msvc',
+          'clang': 'clang',
+          'apple-clang': 'darwin'}
 
         b2_toolset = toolsets[str(self.settings.compiler)]
         
@@ -42,3 +42,6 @@ class BoostSystemConan(ConanFile):
         self.copy(pattern="*", dst="include", src=include_dir)
         lib_dir = os.path.join(self.build_folder, "stage/lib")
         self.copy(pattern="*", dst="lib", src=lib_dir)
+
+    def package_info(self):
+        self.cpp_info.libs = ["boost_%s"%(self.lib_short_name)]
