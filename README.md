@@ -8,14 +8,14 @@ The packages generated with this **conanfile** can be found in [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install Boost.System/1.64.0@bincrafters/stable
+    $ conan install Boost.System/1.64.0@bincrafters/testing
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    Boost.System/1.64.0@bincrafters/stable
+    Boost.System/1.64.0@bincrafters/testing
 
     [generators]
     txt
@@ -36,14 +36,13 @@ The following command both runs all the steps of the conan file, and publishes t
 
     $ conan create bincrafters/testing
 	
-## Add Remote and Associate package with it
+## Add Remote
 
 	$ conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
-	$ conan remote add_ref Boost.System/1.64.0@bincrafters/testing bincrafters
 
 ## Upload
 
-    $ conan upload Boost.System/1.64.0@bincrafters/testing --all
+    $ conan upload Boost.System/1.64.0@bincrafters/testing --all -r bincrafters
 
 ### License
 [Boost](LICENSE)

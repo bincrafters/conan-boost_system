@@ -4,13 +4,14 @@ from conans import ConanFile, os
 class BoostSystemConan(ConanFile):
     name = "Boost.System"
     version = "1.64.0"
-    generators = "txt", "boost"
+    generators = "boost"
     settings = "os", "arch", "compiler", "build_type"
-    url = "https://github.com/boostorg/system"
+    url = "https://github.com/bincrafters/conan-boost-system"
+    source_url = "https://github.com/boostorg/system"
     description = "Please visit http://www.boost.org/doc/libs/1_64_0/libs/libraries.htm"
     license = "www.boost.org/users/license.html"
     lib_short_name = "system"
-    build_requires = "Boost.Build/1.64.0@bincrafters/testing", "Boost.Generator/0.0.1@bincrafters/testing"
+    build_requires = "Boost.Generator/0.0.1@bincrafters/testing"
     requires = "Boost.Config/1.64.0@bincrafters/testing", \
         "Boost.Assert/1.64.0@bincrafters/testing", \
         "Boost.Core/1.64.0@bincrafters/testing", \
@@ -19,7 +20,7 @@ class BoostSystemConan(ConanFile):
                       
     def source(self):
         self.run("git clone --depth=1 --branch=boost-{0} {1}.git"
-                 .format(self.version, self.url))
+                 .format(self.version, self.source_url))
 
     def build(self):
         boost_build = self.deps_cpp_info["Boost.Build"]
@@ -44,4 +45,4 @@ class BoostSystemConan(ConanFile):
         self.copy(pattern="*", dst="lib", src=lib_dir)
 
     def package_info(self):
-        self.cpp_info.libs = ["boost_%s"%(self.lib_short_name)]
+        self.cpp_info.libs = self.collect_libs()
