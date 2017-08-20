@@ -7,6 +7,10 @@ class BoostSystemConan(ConanFile):
     generators = "boost"
     settings = "os", "arch", "compiler", "build_type"
     short_paths = True
+    options = {
+        "shared": [True, False] }
+    default_options = \
+        "shared=False"
     url = "https://github.com/bincrafters/conan-boost-system"
     source_url = "https://github.com/boostorg/system"
     description = "Please visit http://www.boost.org/doc/libs/1_64_0/libs/libraries.htm"
@@ -36,3 +40,4 @@ class BoostSystemConan(ConanFile):
     def package_info(self):
         self.user_info.lib_short_names = (",").join(self.lib_short_names)
         self.cpp_info.libs = self.collect_libs()
+        self.cpp_info.defines.append("BOOST_ALL_NO_LIB=1")
