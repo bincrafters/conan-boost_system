@@ -6,6 +6,7 @@ class BoostSystemConan(ConanFile):
     version = "1.64.0"
     generators = "boost"
     settings = "os", "arch", "compiler", "build_type"
+    short_paths = True
     url = "https://github.com/bincrafters/conan-boost-system"
     source_url = "https://github.com/boostorg/system"
     description = "Please visit http://www.boost.org/doc/libs/1_64_0/libs/libraries.htm"
