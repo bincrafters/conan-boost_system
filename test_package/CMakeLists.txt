@@ -1,0 +1,5 @@
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+add_definitions(-DHEADER="<${HEADER}>")
+add_executable(test test.cpp)
+target_link_libraries(test ${CONAN_LIBS})
