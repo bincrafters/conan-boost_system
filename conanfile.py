@@ -1,4 +1,5 @@
-from conans import ConanFile, os
+from conans import ConanFile, tools, os
+import re
 
 
 class BoostSystemConan(ConanFile):
@@ -24,8 +25,13 @@ class BoostSystemConan(ConanFile):
         "Boost.Winapi/1.64.0@bincrafters/testing"
                       
     def source(self):
-        self.run("git clone --depth=1 --branch=boost-{0} {1}.git"
-                 .format(self.version, self.source_url))
+        for lib_short_name in self.lib_short_names:
+            archive = "boost-" + self.version \
+                if re.match("[0-9]+[.][0-9]+[.][0-9]+", self.version) \
+                else self.version
+            tools.get("https://github.com/boostorg/{0}/archive/{1}.tar.gz"
+                .format(lib_short_name, archive))
+            os.rename(lib_short_name+"-"+archive, lib_short_name)
 
     def build(self):
         self.run(self.deps_user_info['Boost.Generator'].b2_command)
