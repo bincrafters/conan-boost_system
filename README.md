@@ -8,14 +8,14 @@ The packages generated with this **conanfile** can be found in [Bintray](https:/
 
 ### Basic setup
 
-    $ conan install Boost.System/1.64.0@bincrafters/testing
+    $ conan install Boost.System/1.65.1@bincrafters/testing
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    Boost.System/1.64.0@bincrafters/testing
+    Boost.System/1.65.1@bincrafters/testing
 
     [generators]
     txt
@@ -42,7 +42,7 @@ The following command both runs all the steps of the conan file, and publishes t
 
 ## Upload
 
-    $ conan upload Boost.System/1.64.0@bincrafters/testing --all -r bincrafters
+    $ conan upload Boost.System/1.65.1@bincrafters/testing --all -r bincrafters
 
 ### License
 [Boost](LICENSE)
