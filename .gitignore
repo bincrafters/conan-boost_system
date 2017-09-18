@@ -3,7 +3,6 @@
 *.lo
 *.o
 *.obj
-*.pyc
 
 # Precompiled Headers
 *.gch
@@ -34,7 +33,7 @@
 __pycache__
 init.bat
 upload.bat
-build*
+build*/
 bin*
 .vs
 .vscode*
