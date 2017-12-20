@@ -27,7 +27,6 @@ class BoostSystemConan(ConanFile):
     short_paths = True
     generators = "boost"
     settings = "os", "arch", "compiler", "build_type"
-    exports = "boostgenerator.py"
 
     def package_id(self):
         getattr(self, "package_id_after", lambda:None)()
