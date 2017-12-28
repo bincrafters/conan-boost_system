@@ -1,5 +1,4 @@
-from conans import ConanFile
-
+from conans import ConanFile, tools
 
 class BoostSystemConan(ConanFile):
     name = "Boost.System"
@@ -8,12 +7,13 @@ class BoostSystemConan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
 
-    requires = \
-        "Boost.Config/1.65.1@bincrafters/testing", \
-        "Boost.Assert/1.65.1@bincrafters/testing", \
-        "Boost.Core/1.65.1@bincrafters/testing", \
-        "Boost.Predef/1.65.1@bincrafters/testing", \
+    requires = (
+        "Boost.Config/1.65.1@bincrafters/testing", 
+        "Boost.Assert/1.65.1@bincrafters/testing", 
+        "Boost.Core/1.65.1@bincrafters/testing", 
+        "Boost.Predef/1.65.1@bincrafters/testing", 
         "Boost.Winapi/1.65.1@bincrafters/testing"
+    )
 
     lib_short_names = ["system"]
     is_header_only = False
@@ -29,31 +29,27 @@ class BoostSystemConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
 
     def package_id(self):
-        getattr(self, "package_id_after", lambda:None)()
+        #TODO: Ask what to put here
+        pass
+        
     def source(self):
-        self.call_patch("source")
-    def build(self):
-        self.call_patch("build")
-    def package(self):
-        self.call_patch("package")
-    def package_info(self):
-        self.call_patch("package_info")
-    def call_patch(self, method, *args):
-        if not hasattr(self, '__boost_conan_file__'):
-            try:
-                from conans import tools
-                with tools.pythonpath(self):
-                    import boostgenerator  # pylint: disable=F0401
-                    boostgenerator.BoostConanFile(self)
-            except Exception as e:
-                self.output.error("Failed to import boostgenerator for: "+str(self)+" @ "+method.upper())
-                raise e
-        return getattr(self, method, lambda:None)(*args)
-    @property
-    def env(self):
-        import os.path
-        result = super(self.__class__, self).env
-        result['PYTHONPATH'] = [os.path.dirname(__file__)] + result.get('PYTHONPATH',[])
-        return result
+        with tools.pythonpath(self):
+            import boost_conan_methods  # pylint: disable=F0401
+            boost_conan_methods.source(self)
 
+    def build(self):
+        with tools.pythonpath(self):
+            import boost_conan_methods  # pylint: disable=F0401
+            boost_conan_methods.build(self)
+            
+    def package(self):
+        with tools.pythonpath(self):
+            import boost_conan_methods  # pylint: disable=F0401
+            boost_conan_methods.package(self)
+            
+    def package_info(self):
+        with tools.pythonpath(self):
+            import boost_conan_methods  # pylint: disable=F0401
+            boost_conan_methods.package_info(self)
+    
     # END
