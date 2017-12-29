@@ -1,15 +1,20 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from conans import ConanFile, tools
+
 
 class BoostSystemConan(ConanFile):
     name = "Boost.System"
     version = "1.65.1"
-
+    url = "https://github.com/bincrafters/conan-boost-system"
+    lib_short_names = ["system"]
+    is_header_only = False
     options = {"shared": [True, False]}
     default_options = "shared=False"
 
-    url = "https://github.com/bincrafters/conan-boost-system"
-
     requires = (
+        "boost_package_tools/1.65.1@bincrafters/testing", 
         "Boost.Config/1.65.1@bincrafters/testing", 
         "Boost.Assert/1.65.1@bincrafters/testing", 
         "Boost.Core/1.65.1@bincrafters/testing", 
@@ -17,19 +22,11 @@ class BoostSystemConan(ConanFile):
         "Boost.Winapi/1.65.1@bincrafters/testing"
     )
 
-    lib_short_names = ["system"]
-    is_header_only = False
-
-    def package_info_additional(self):
-        pass
-
-    def package_id(self):
-        pass        
 
     # BEGIN TEMPLATE
     
     description = "Please visit http://www.boost.org/doc/libs/1_65_1"
-    license = "www.boost.org/users/license.html"
+    license = "BSL"
     build_requires = "Boost.Generator/1.65.1@bincrafters/testing"
     short_paths = True
     generators = "boost"
@@ -37,23 +34,26 @@ class BoostSystemConan(ConanFile):
 
     def source(self):
         with tools.pythonpath(self):
-            import boost_conan_methods  # pylint: disable=F0401
-            boost_conan_methods.source(self)
+            import boost_package_tools  # pylint: disable=F0401
+            boost_package_tools.source(self)
+        getattr(self, "source_additional", lambda:None)()
 
     def build(self):
         with tools.pythonpath(self):
-            import boost_conan_methods  # pylint: disable=F0401
-            boost_conan_methods.build(self)
-            
+            import boost_package_tools  # pylint: disable=F0401
+            boost_package_tools.build(self)
+        getattr(self, "build_additional", lambda:None)()
+        
     def package(self):
         with tools.pythonpath(self):
-            import boost_conan_methods  # pylint: disable=F0401
-            boost_conan_methods.package(self)
-            
+            import boost_package_tools  # pylint: disable=F0401
+            boost_package_tools.package(self)
+        getattr(self, "package_additional", lambda:None)()
+        
     def package_info(self):
         with tools.pythonpath(self):
-            import boost_conan_methods  # pylint: disable=F0401
-            boost_conan_methods.package_info(self)
-        self.package_info_additional()
+            import boost_package_tools  # pylint: disable=F0401
+            boost_package_tools.package_info(self)
+        getattr(self, "package_info_additional", lambda:None)()
             
     # END TEMPLATE
