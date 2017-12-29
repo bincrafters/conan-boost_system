@@ -7,6 +7,8 @@ class BoostSystemConan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
 
+    url = "https://github.com/bincrafters/conan-boost-system"
+
     requires = (
         "Boost.Config/1.65.1@bincrafters/testing", 
         "Boost.Assert/1.65.1@bincrafters/testing", 
@@ -18,9 +20,14 @@ class BoostSystemConan(ConanFile):
     lib_short_names = ["system"]
     is_header_only = False
 
-    # BEGIN
+    def package_info_additional(self):
+        pass
 
-    url = "https://github.com/bincrafters/conan-boost-system"
+    def package_id(self):
+        pass        
+
+    # BEGIN TEMPLATE
+    
     description = "Please visit http://www.boost.org/doc/libs/1_65_1"
     license = "www.boost.org/users/license.html"
     build_requires = "Boost.Generator/1.65.1@bincrafters/testing"
@@ -28,10 +35,6 @@ class BoostSystemConan(ConanFile):
     generators = "boost"
     settings = "os", "arch", "compiler", "build_type"
 
-    def package_id(self):
-        #TODO: Ask what to put here
-        pass
-        
     def source(self):
         with tools.pythonpath(self):
             import boost_conan_methods  # pylint: disable=F0401
@@ -51,5 +54,6 @@ class BoostSystemConan(ConanFile):
         with tools.pythonpath(self):
             import boost_conan_methods  # pylint: disable=F0401
             boost_conan_methods.package_info(self)
-    
-    # END
+        self.package_info_additional()
+            
+    # END TEMPLATE
