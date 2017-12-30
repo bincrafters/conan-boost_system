@@ -1,63 +1,65 @@
-from conans import ConanFile
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from conans import ConanFile, tools
 
 
 class BoostSystemConan(ConanFile):
-    name = "Boost.System"
+    name = "boost_system"
     version = "1.66.0"
-
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
-
-    requires = \
-        "Boost.Config/1.66.0@bincrafters/testing", \
-        "Boost.Assert/1.66.0@bincrafters/testing", \
-        "Boost.Core/1.66.0@bincrafters/testing", \
-        "Boost.Predef/1.66.0@bincrafters/testing", \
-        "Boost.Winapi/1.66.0@bincrafters/testing"
+    url = "https://github.com/bincrafters/conan-boost-system"
 
     lib_short_names = ["system"]
     is_header_only = False
 
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+
+    requires = (
+        "boost_package_tools/1.66.0@bincrafters/testing",
+        "boost_config/1.66.0@bincrafters/testing", \
+        "boost_assert/1.66.0@bincrafters/testing", \
+        "boost_core/1.66.0@bincrafters/testing", \
+        "boost_predef/1.66.0@bincrafters/testing", \
+        "boost_winapi/1.66.0@bincrafters/testing"
+    )
+
     # BEGIN
 
-    url = "https://github.com/bincrafters/conan-boost-system"
     description = "Please visit http://www.boost.org/doc/libs/1_66_0"
-    license = "www.boost.org/users/license.html"
-    build_requires = "Boost.Generator/1.66.0@bincrafters/testing"
+    license = "BSL-1.0"
     short_paths = True
     generators = "boost"
     settings = "os", "arch", "compiler", "build_type"
-    exports = "boostgenerator.py"
+    build_requires = "boost_generator/1.66.0@bincrafters/testing"
 
     def package_id(self):
-        getattr(self, "package_id_after", lambda:None)()
+        getattr(self, "package_id_additional", lambda:None)()
+
     def source(self):
-        self.call_patch("source")
+        with tools.pythonpath(self):
+            import boost_package_tools  # pylint: disable=F0401
+            boost_package_tools.source(self)
+        getattr(self, "source_additional", lambda:None)()
+
     def build(self):
-        self.call_patch("build")
+        with tools.pythonpath(self):
+            import boost_package_tools  # pylint: disable=F0401
+            boost_package_tools.build(self)
+        getattr(self, "build_additional", lambda:None)()
+
     def package(self):
-        self.call_patch("package")
+        with tools.pythonpath(self):
+            import boost_package_tools  # pylint: disable=F0401
+            boost_package_tools.package(self)
+        getattr(self, "package_additional", lambda:None)()
+
     def package_info(self):
-        self.call_patch("package_info")
-    def call_patch(self, method, *args):
-        if not hasattr(self, '__boost_conan_file__'):
-            try:
-                from conans import tools
-                with tools.pythonpath(self):
-                    import boostgenerator  # pylint: disable=F0401
-                    boostgenerator.BoostConanFile(self)
-            except Exception as e:
-                self.output.error("Failed to import boostgenerator for: "+str(self)+" @ "+method.upper())
-                raise e
-        return getattr(self, method, lambda:None)(*args)
-    @property
-    def env(self):
-        import os.path
-        result = super(self.__class__, self).env
-        result['PYTHONPATH'] = [os.path.dirname(__file__)] + result.get('PYTHONPATH',[])
-        return result
-    @property
-    def build_policy_missing(self):
-        return (getattr(self, 'is_in_cycle_group', False) and not getattr(self, 'is_header_only', True)) or super(self.__class__, self).build_policy_missing
+        with tools.pythonpath(self):
+            import boost_package_tools  # pylint: disable=F0401
+            boost_package_tools.package_info(self)
+        getattr(self, "package_info_additional", lambda:None)()
+
+
 
     # END
