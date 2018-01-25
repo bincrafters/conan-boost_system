@@ -15,7 +15,6 @@ class TestPackageConan(ConanFile):
         cmake.build()
 
     def test(self):
-        print(RunEnvironment(self).vars)
         with tools.environment_append(RunEnvironment(self).vars):
             bin_path = os.path.join("bin", "test_package")
             if self.settings.os == "Windows":
