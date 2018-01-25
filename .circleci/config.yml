@@ -1,18 +1,3 @@
-version: 2
-.conan-steps: &conan-steps
-  steps:
-    - checkout
-    - run:
-        name: Update Conan package
-        command: |
-          chmod +x .circleci/install.sh
-          .circleci/install.sh
-    - run:
-        name: Build recipe
-        command: |
-          chmod +x .circleci/run.sh
-          .circleci/run.sh
-
 jobs:
   xcode8:
     macos:
