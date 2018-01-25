@@ -8,7 +8,8 @@ class BoostSystemConan(ConanFile):
     name = "boost_system"
     version = "1.66.0"
     url = "https://github.com/bincrafters/conan-boost_system"
-
+    author = "Bincrafters <bincrafters@gmail.com>"
+    exports = ["LICENSE.md"]
     lib_short_names = ["system"]
     is_header_only = False
 
