@@ -18,10 +18,10 @@ class BoostSystemConan(ConanFile):
 
     requires = (
         "boost_package_tools/1.66.0@bincrafters/testing",
-        "boost_config/1.66.0@bincrafters/testing", \
-        "boost_assert/1.66.0@bincrafters/testing", \
-        "boost_core/1.66.0@bincrafters/testing", \
-        "boost_predef/1.66.0@bincrafters/testing", \
+        "boost_config/1.66.0@bincrafters/testing",
+        "boost_assert/1.66.0@bincrafters/testing",
+        "boost_core/1.66.0@bincrafters/testing",
+        "boost_predef/1.66.0@bincrafters/testing",
         "boost_winapi/1.66.0@bincrafters/testing"
     )
 
