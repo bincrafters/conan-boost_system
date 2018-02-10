@@ -17,14 +17,20 @@ class BoostSystemConan(ConanFile):
     default_options = "shared=False"
 
     requires = (
-        "boost_package_tools/1.66.0@bincrafters/stable",
-        "boost_config/1.66.0@bincrafters/stable", \
-        "boost_assert/1.66.0@bincrafters/stable", \
-        "boost_core/1.66.0@bincrafters/stable", \
-        "boost_predef/1.66.0@bincrafters/stable", \
-        "boost_winapi/1.66.0@bincrafters/stable"
+        "boost_package_tools/1.66.0@bincrafters/testing",
+        "boost_config/1.66.0@bincrafters/testing",
+        "boost_assert/1.66.0@bincrafters/testing",
+        "boost_core/1.66.0@bincrafters/testing",
+        "boost_predef/1.66.0@bincrafters/testing",
+        "boost_winapi/1.66.0@bincrafters/testing"
     )
 
+    def package_id_additional(self):
+        boost_deps_only = [dep_name for dep_name in self.info.requires.pkg_names if dep_name.startswith("boost_")]
+       
+        for dep_name in boost_deps_only:
+            self.info.requires[dep_name].full_version_mode()
+        
     # BEGIN
 
     description = "Please visit http://www.boost.org/doc/libs/1_66_0"
@@ -32,7 +38,7 @@ class BoostSystemConan(ConanFile):
     short_paths = True
     generators = "boost"
     settings = "os", "arch", "compiler", "build_type"
-    build_requires = "boost_generator/1.66.0@bincrafters/stable"
+    build_requires = "boost_generator/1.66.0@bincrafters/testing"
 
     def package_id(self):
         getattr(self, "package_id_additional", lambda:None)()
