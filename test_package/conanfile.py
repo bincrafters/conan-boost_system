@@ -9,6 +9,11 @@ class TestPackageConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
 
+    def requirements(self):
+        boost_deps = ['assert', 'config', 'core', 'predef', 'system', 'winapi']
+        for lib in boost_deps:
+            self.requires("boost_" + lib + "/1.67.0@" + self.user + "/" + self.channel)
+
     def build(self):
         cmake = CMake(self)
         cmake.configure()
@@ -16,10 +21,7 @@ class TestPackageConan(ConanFile):
 
     def test(self):
         with tools.environment_append(RunEnvironment(self).vars):
-            bin_path = os.path.join("bin", "test_package")
             if self.settings.os == "Windows":
-                self.run(bin_path)
-            elif self.settings.os == "Macos":
-                self.run("DYLD_LIBRARY_PATH=%s %s" % (os.environ.get('DYLD_LIBRARY_PATH', ''), bin_path))
+                self.run(os.path.join("bin", "test_package"))
             else:
-                self.run("LD_LIBRARY_PATH=%s %s" % (os.environ.get('LD_LIBRARY_PATH', ''), bin_path))
+                self.run("DYLD_LIBRARY_PATH=%s %s" % (os.environ['DYLD_LIBRARY_PATH'], os.path.join("bin", "test_package")))
