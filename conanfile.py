@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+<<<<<<< HEAD
 
 from conans import ConanFile, tools
+=======
+>>>>>>> testing/1.67.0
 
+from conans import python_requires
 
+<<<<<<< HEAD
 class BoostSystemConan(ConanFile):
     name = "Boost.System"
     version = "1.65.1"
@@ -57,3 +62,21 @@ class BoostSystemConan(ConanFile):
         getattr(self, "package_info_additional", lambda:None)()
             
     # END TEMPLATE
+=======
+
+base = python_requires("boost_base/1.67.0@bincrafters/testing")
+
+class BoostSystemConan(base.BoostBaseConan):
+    name = "boost_system"
+    url = "https://github.com/bincrafters/conan-boost_system"
+    lib_short_names = ["system"]
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
+    b2_requires = [
+        "boost_assert",
+        "boost_config",
+        "boost_core",
+        "boost_predef",
+        "boost_winapi"
+    ]
+>>>>>>> testing/1.67.0
