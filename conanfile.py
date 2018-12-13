@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 from conans import ConanFile, tools
 =======
@@ -63,8 +64,13 @@ class BoostSystemConan(ConanFile):
             
     # END TEMPLATE
 =======
+=======
 
-base = python_requires("boost_base/1.67.0@bincrafters/testing")
+from conans import python_requires
+
+>>>>>>> testing/1.68.0
+
+base = python_requires("boost_base/1.68.0@bincrafters/stable")
 
 class BoostSystemConan(base.BoostBaseConan):
     name = "boost_system"
@@ -79,4 +85,7 @@ class BoostSystemConan(base.BoostBaseConan):
         "boost_predef",
         "boost_winapi"
     ]
+<<<<<<< HEAD
 >>>>>>> testing/1.67.0
+=======
+>>>>>>> testing/1.68.0
