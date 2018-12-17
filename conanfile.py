@@ -4,18 +4,16 @@
 from conans import python_requires
 
 
-base = python_requires("boost_base/1.68.0@bincrafters/testing")
+base = python_requires("boost_base/1.69.0@bincrafters/testing")
 
 class BoostSystemConan(base.BoostBaseConan):
     name = "boost_system"
     url = "https://github.com/bincrafters/conan-boost_system"
     lib_short_names = ["system"]
+    header_only_libs = ["system"]
     options = {"shared": [True, False]}
     default_options = "shared=False"
     b2_requires = [
-        "boost_assert",
         "boost_config",
-        "boost_core",
-        "boost_predef",
         "boost_winapi"
     ]
