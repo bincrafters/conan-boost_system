@@ -10,7 +10,6 @@ class BoostSystemConan(base.BoostBaseConan):
     name = "boost_system"
     url = "https://github.com/bincrafters/conan-boost_system"
     lib_short_names = ["system"]
-    header_only_libs = ["system"]
     options = {"shared": [True, False]}
     default_options = "shared=False"
     b2_requires = [
