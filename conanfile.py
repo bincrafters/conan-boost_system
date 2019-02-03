@@ -8,6 +8,7 @@ base = python_requires("boost_base/1.69.0@bincrafters/stable")
 
 class BoostSystemConan(base.BoostBaseConan):
     name = "boost_system"
+    version = "1.69.0"
     url = "https://github.com/bincrafters/conan-boost_system"
     lib_short_names = ["system"]
     options = {"shared": [True, False]}
